@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="バルセロナ観光ガイド - 12の魅力を紹介">
+  <meta name="description" content="Barcelona Travel Guide - 12 top attractions">
   <meta name="theme-color" content="#1a3a5f">
   <title>Barcelona Travel Guide PWA</title>
   
-  <!-- マニフェスト（外部アイコンを参照） -->
+  <!-- Manifest and icons (external files) -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
@@ -120,7 +120,7 @@
       margin: 0 auto;
       padding: 30px 20px 80px;
     }
-    /* パートナー/スポンサー セクション */
+    /* Partner & Sponsor sections */
     .partner-section, .sponsor-section {
       background: var(--sponsor-bg);
       border-radius: 20px;
@@ -144,7 +144,6 @@
       justify-content: center;
       gap: 25px;
     }
-    /* イメージ付きボタン */
     .partner-btn, .sponsor-btn {
       display: inline-flex;
       align-items: center;
@@ -388,45 +387,45 @@
   </header>
 
   <main>
-    <!-- メイン画面 -->
+    <!-- Main page -->
     <div id="mainPage">
-      <!-- パートナー枠 (上部) -->
+      <!-- Partner section (top) -->
       <div class="partner-section" id="mainPartnerSection">
-        <div class="section-title">🤝 オフィシャルパートナー</div>
+        <div class="section-title" id="partnerTitleMain">OFFICIAL PARTNERS</div>
         <div class="partner-grid" id="mainPartnerGrid"></div>
       </div>
 
-      <h2 class="page-title">Barcelona's Top Attractions</h2>
+      <h2 class="page-title" id="pageTitleMain">Barcelona's Top Attractions</h2>
       
-      <!-- 地下鉄マップ & Googleマップ 埋め込み -->
+      <!-- Metro map & Google Maps -->
       <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 40px;">
         <div style="flex: 1; min-width: 250px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 12px;">🚇 バルセロナ地下鉄マップ</h3>
+          <h3 style="color: var(--accent-color); margin-bottom: 12px;" id="metroMapTitle">🚇 Barcelona Metro Map</h3>
           <div class="metro-map">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/1024px-Mapa_metro_Barcelona.svg.png" 
                  alt="Barcelona Metro Map" style="width:100%; border-radius: 12px;">
-            <p style="font-size: 0.8rem; margin-top: 8px;"><a href="https://www.tmb.cat/en/barcelona-transport/map" target="_blank" style="color: var(--secondary-color);">公式地下鉄路線図 (TMB)</a></p>
+            <p style="font-size: 0.8rem; margin-top: 8px;"><a href="https://www.tmb.cat/en/barcelona-transport/map" target="_blank" style="color: var(--secondary-color);" id="officialMetroLink">Official Metro Map (TMB)</a></p>
           </div>
         </div>
         <div style="flex: 1; min-width: 250px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 12px;">📍 中心駅 (Plaça de Catalunya)</h3>
+          <h3 style="color: var(--accent-color); margin-bottom: 12px;" id="centralStationTitle">📍 Central Station (Plaça de Catalunya)</h3>
           <div class="google-map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.177802529166!2d2.169339715500795!3d41.386960479262685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2fcddeedbad%3A0x9b3e3b3b3b3b3b3b!2sPla%C3%A7a%20de%20Catalunya!5e0!3m2!1sen!2ses!4v1617189786543!5m2!1sen!2ses" allowfullscreen="" loading="lazy" style="width:100%; height:350px; border:0; border-radius:12px;"></iframe>
           </div>
         </div>
       </div>
 
-      <!-- 観光スポットリスト -->
+      <!-- Attractions list -->
       <div class="attractions-list" id="attractionsList"></div>
 
-      <!-- スポンサー枠 (下部) -->
+      <!-- Sponsor section (bottom) -->
       <div class="sponsor-section" id="mainSponsorSection">
-        <div class="section-title">✨ スポンサー ✨</div>
+        <div class="section-title" id="sponsorTitleMain">SPONSORS</div>
         <div class="sponsor-grid" id="mainSponsorGrid"></div>
       </div>
     </div>
 
-    <!-- 詳細ページ -->
+    <!-- Detail page -->
     <div id="detailPage" class="detail-page">
       <button class="back-button" id="backButton">← Back to List</button>
       <div class="detail-container">
@@ -436,23 +435,23 @@
           <h2 class="detail-title" id="detailTitle"></h2>
           <p class="detail-text" id="detailDescription"></p>
           <div class="transport-section">
-            <h3 class="section-subtitle">🚆 Transportation</h3>
-            <p><strong>From Airport:</strong> <span id="airportTransport"></span></p>
-            <p><strong>Within City:</strong> <span id="cityTransport"></span></p>
+            <h3 class="section-subtitle" id="transportTitle">🚆 Transportation</h3>
+            <p><strong id="fromAirportLabel">From Airport:</strong> <span id="airportTransport"></span></p>
+            <p><strong id="withinCityLabel">Within City:</strong> <span id="cityTransport"></span></p>
             <div class="metro-map" style="margin-top: 16px;">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/800px-Mapa_metro_Barcelona.svg.png" alt="Metro Map Mini" style="max-height: 180px; width: auto;">
             </div>
           </div>
-          <a id="officialLink" class="official-link" href="#" target="_blank">🌐 Official Website →</a>
+          <a id="officialLink" class="official-link" href="#" target="_blank" id="officialLinkText">🌐 Official Website →</a>
           
-          <!-- 詳細ページ用 パートナー枠 -->
+          <!-- Partner section inside detail -->
           <div class="partner-section" style="margin-top: 30px;" id="detailPartnerSection">
-            <div class="section-title">🤝 オフィシャルパートナー</div>
+            <div class="section-title" id="partnerTitleDetail">OFFICIAL PARTNERS</div>
             <div class="partner-grid" id="detailPartnerGrid"></div>
           </div>
-          <!-- 詳細ページ用 スポンサー枠 -->
+          <!-- Sponsor section inside detail -->
           <div class="sponsor-section" id="detailSponsorSection">
-            <div class="section-title">✨ スポンサー ✨</div>
+            <div class="section-title" id="sponsorTitleDetail">SPONSORS</div>
             <div class="sponsor-grid" id="detailSponsorGrid"></div>
           </div>
         </div>
@@ -461,17 +460,49 @@
   </main>
 
   <footer>
-    <p>📧 Contact: <a href="mailto:mementomorikatsu@gmail.com" class="contact-link">mementomorikatsu@gmail.com</a></p>
-    <p style="font-size: 0.8rem;">© Barcelona Travel Guide PWA</p>
+    <p id="contactLabel">📧 Contact:</p>
+    <a href="mailto:mementomorikatsu@gmail.com" class="contact-link">mementomorikatsu@gmail.com</a>
+    <p style="font-size: 0.8rem; margin-top: 8px;" id="copyright">© Barcelona Travel Guide PWA</p>
   </footer>
 
   <script>
     // ============================================================
-    // パートナー & スポンサーデータ（後から簡単に追加・変更できます）
-    // 各オブジェクト: { name: "表示名", logoUrl: "画像URL", websiteUrl: "リンク先URL" }
-    // 画像URLは外部画像でも data:image/svg+xml でも可。
-    // ダミーとして SVG データURIの例を用意しています。実際のロゴに差し替えてください。
+    // Language strings for UI elements (English and Spanish only)
     // ============================================================
+    const uiText = {
+      en: {
+        partnerTitle: "OFFICIAL PARTNERS",
+        sponsorTitle: "SPONSORS",
+        pageTitle: "Barcelona's Top Attractions",
+        metroMapTitle: "🚇 Barcelona Metro Map",
+        officialMetroLink: "Official Metro Map (TMB)",
+        centralStationTitle: "📍 Central Station (Plaça de Catalunya)",
+        backButton: "← Back to List",
+        transportTitle: "🚆 Transportation",
+        fromAirportLabel: "From Airport:",
+        withinCityLabel: "Within City:",
+        officialLinkText: "🌐 Official Website →",
+        contactLabel: "📧 Contact:",
+        copyright: "© Barcelona Travel Guide PWA"
+      },
+      es: {
+        partnerTitle: "SOCIOS OFICIALES",
+        sponsorTitle: "PATROCINADORES",
+        pageTitle: "Principales Atracciones de Barcelona",
+        metroMapTitle: "🚇 Mapa del Metro de Barcelona",
+        officialMetroLink: "Mapa Oficial del Metro (TMB)",
+        centralStationTitle: "📍 Estación Central (Plaça de Catalunya)",
+        backButton: "← Volver a la lista",
+        transportTitle: "🚆 Transporte",
+        fromAirportLabel: "Desde el aeropuerto:",
+        withinCityLabel: "Dentro de la ciudad:",
+        officialLinkText: "🌐 Sitio web oficial →",
+        contactLabel: "📧 Contacto:",
+        copyright: "© Barcelona Travel Guide PWA"
+      }
+    };
+
+    // Partner & Sponsor data (image + link)
     const partners = [
       {
         name: "Barcelona Turisme",
@@ -479,7 +510,7 @@
         websiteUrl: "https://www.barcelonaturisme.com"
       },
       {
-        name: "TMB (公共交通)",
+        name: "TMB (Public Transport)",
         logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234e9f3d'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ETMB%3C/text%3E%3C/svg%3E",
         websiteUrl: "https://www.tmb.cat"
       },
@@ -507,11 +538,8 @@
         websiteUrl: "https://www.free-now.com"
       }
     ];
-    // ============================================================
-    // ここまでがパートナー/スポンサーの設定。以下は自動生成コード
-    // ============================================================
 
-    // 観光名所データ（完全版、省略なし。実際には前回と同様12スポット）
+    // Attractions data (English & Spanish) – only names and categories are language-specific; descriptions are already bilingual in data.
     const attractionsData = {
       en: [
         { id: "sagrada-familia", name: "Sagrada Família", category: "Gaudí's Masterpiece", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8icHwUGJdkp-mkt37BD1vzPLHVtLDEH4xjZ9yWPRjzT3MlqCJUgmq9CM&s=10", description: "Antoni Gaudí's unfinished masterpiece, a basilica that combines Gothic and Art Nouveau forms.", airportTransport: "Aerobus to Plaça de Catalunya, then Metro L2 or L5 to Sagrada Família station", cityTransport: "Metro: L2 and L5, Sagrada Família station.", officialLink: "https://sagradafamilia.org" },
@@ -527,14 +555,23 @@
         { id: "barceloneta", name: "Barceloneta Beach", category: "Seaside Relaxation", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtdH5DI9KxusCc_u-EN12eLdVnWqg-692fadosCrycwnhmt1yAwXZpiSQ&s=10", description: "Most famous beach.", airportTransport: "Aerobus to Plaça de Catalunya, then Metro L4 to Barceloneta", cityTransport: "Metro: L4 to Barceloneta", officialLink: "https://www.barcelonaturisme.com" },
         { id: "montjuic", name: "Montjuïc Hill & Magic Fountain", category: "Seaside Relaxation", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlf3OcMLfiL0Eb0hHcJt8bQaC9CMeGArDhFWRjiCU3dsvTci5lA3SnTmV6&s=10", description: "Hill with gardens and Magic Fountain shows.", airportTransport: "Aerobus to Plaça de Espanya, then bus", cityTransport: "Metro: L1, L3 to Plaça de Espanya", officialLink: "https://www.barcelonaturisme.com" }
       ],
-      es: [] // スペイン語データは簡略化（実際にはenからコピー可）
+      es: [
+        { id: "sagrada-familia", name: "Sagrada Família", category: "Obra maestra de Gaudí", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8icHwUGJdkp-mkt37BD1vzPLHVtLDEH4xjZ9yWPRjzT3MlqCJUgmq9CM&s=10", description: "La obra maestra inacabada de Antoni Gaudí, una basílica que combina formas góticas y modernistas.", airportTransport: "Aerobús a Plaça de Catalunya, luego metro L2 o L5 a la estación Sagrada Família", cityTransport: "Metro: L2 y L5, estación Sagrada Família.", officialLink: "https://sagradafamilia.org" },
+        { id: "park-guell", name: "Park Güell", category: "Obra maestra de Gaudí", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdalgFjVe7Mpr2mPIm0AC6W-0hQgAmyNa--LxrXXYQaAbbrknfjxprgoq&s=10", description: "Un parque mágico con sorprendentes estructuras de piedra, impresionantes mosaicos y fascinantes edificios diseñados por Gaudí.", airportTransport: "Aerobús a Plaça de Catalunya, luego metro L3 a Lesseps o Vallcarca", cityTransport: "Autobús: 24, 92. Metro: L3", officialLink: "https://parkguell.barcelona" },
+        { id: "casa-batllo", name: "Casa Batlló", category: "Obra maestra de Gaudí", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi-iIc634FHv6GQ0CgjHswe0oFeTSrImu4JZdjlr24T9rOthCUYKsVY9Fi&s=10", description: "Un edificio remodelado por Antoni Gaudí, conocido por su calidad orgánica esquelética.", airportTransport: "Aerobús a Plaça de Catalunya, luego 7 minutos a pie", cityTransport: "Metro: L2, L3, L4 a la estación Passeig de Gràcia", officialLink: "https://www.casabatllo.es" },
+        { id: "casa-mila", name: "Casa Milà (La Pedrera)", category: "Obra maestra de Gaudí", image: "https://buffaloah.com/a/virtual/spain/barc/mila/ext/jpgs/2015_2.jpg", description: "La última residencia privada diseñada por Gaudí, famosa por su fachada de piedra ondulante.", airportTransport: "Aerobús a Plaça de Catalunya, luego 10 minutos a pie", cityTransport: "Metro: L3, L5 a Diagonal", officialLink: "https://www.lapedrera.com" },
+        { id: "camp-nou", name: "Experiencia Camp Nou", category: "FC Barcelona", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwv_PkKL8UsnLNcMiQn0JPHD4tAEaGaA2_z06QAdoriGVgwc-DOhtO_qiQ&s=10", description: "Sede del FC Barcelona, el estadio más grande de Europa.", airportTransport: "Aerobús a Plaça de Catalunya, luego metro L3 a Palau Reial", cityTransport: "Metro: L3 a Palau Reial, Les Corts", officialLink: "https://www.fcbarcelona.com" },
+        { id: "fcb-museum", name: "Museo del FC Barcelona", category: "FC Barcelona", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTohR3L8Nvr3ZgAmRCs2sdDV2jZcThM-1RbSVIkDHslEpruL-Enn7y4Tag&s=10", description: "El museo más visitado de Cataluña.", airportTransport: "Igual que Camp Nou", cityTransport: "Igual que Camp Nou", officialLink: "https://www.fcbarcelona.com" },
+        { id: "las-ramblas", name: "Las Ramblas", category: "Zona Centro", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCzsbSdnmpRTwokWBce_0rFP7Qwe62tl8eIEq3QM_1DlRNqWDvlirFFPiW&s=10", description: "La calle más famosa de Barcelona.", airportTransport: "Aerobús directo a Plaça de Catalunya", cityTransport: "Metro: L3 a Liceu", officialLink: "https://www.barcelonaturisme.com" },
+        { id: "gothic-quarter", name: "Barrio Gótico", category: "Zona Centro", image: "https://barcelonahacks.com/wp-content/uploads/2022/06/barcelona-cathedral-family-1536x960.jpg", description: "Corazón de la ciudad vieja con calles medievales.", airportTransport: "Aerobús a Plaça de Catalunya, luego caminar", cityTransport: "Metro: L4 a Jaume I", officialLink: "https://www.barcelonaturisme.com" },
+        { id: "boqueria-market", name: "Mercado de La Boquería", category: "Zona Centro", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL9CKNMMFxY0VibmNWXn2VLbZy-MzZm_iauw&s", description: "Mercado de alimentos famoso desde 1840.", airportTransport: "Aerobús a Plaça de Catalunya, 5 min a pie", cityTransport: "Metro: L3 a Liceu", officialLink: "https://www.boqueria.barcelona" },
+        { id: "el-rabal", name: "El Raval", category: "Zona Centro", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTN8PaiI172Lpuk3-cuOwWou3gZSRhdG8dO06JkbMBiZEjYNOJ7uvIbUc&s=10", description: "Barrio multicultural con galerías.", airportTransport: "Aerobús a Plaça de Catalunya, 10 min a pie", cityTransport: "Metro: L1, L2 a Universitat", officialLink: "https://www.barcelonaturisme.com" },
+        { id: "barceloneta", name: "Playa de la Barceloneta", category: "Relajación junto al mar", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtdH5DI9KxusCc_u-EN12eLdVnWqg-692fadosCrycwnhmt1yAwXZpiSQ&s=10", description: "La playa más famosa.", airportTransport: "Aerobús a Plaça de Catalunya, luego metro L4 a Barceloneta", cityTransport: "Metro: L4 a Barceloneta", officialLink: "https://www.barcelonaturisme.com" },
+        { id: "montjuic", name: "Montjuïc y Fuente Mágica", category: "Relajación junto al mar", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlf3OcMLfiL0Eb0hHcJt8bQaC9CMeGArDhFWRjiCU3dsvTci5lA3SnTmV6&s=10", description: "Colina con jardines y espectáculos de la Fuente Mágica.", airportTransport: "Aerobús a Plaça d'Espanya, luego autobús", cityTransport: "Metro: L1, L3 a Plaça d'Espanya", officialLink: "https://www.barcelonaturisme.com" }
+      ]
     };
-    // 簡易スペイン語データ生成（必要に応じて）
-    if(attractionsData.es.length === 0) {
-      attractionsData.es = attractionsData.en.map(e => ({...e, category: e.category === "Gaudí's Masterpiece" ? "Obra maestra de Gaudí" : (e.category==="FC Barcelona"?"FC Barcelona":(e.category==="Downtown Area"?"Zona Centro":"Relajación junto al mar"))}));
-    }
 
-    // DOM要素
+    // DOM elements
     const mainPage = document.getElementById('mainPage');
     const detailPage = document.getElementById('detailPage');
     const attractionsList = document.getElementById('attractionsList');
@@ -542,7 +579,31 @@
     const langBtn = document.getElementById('langBtn');
     const themeBtn = document.getElementById('themeBtn');
 
-    // パートナー/スポンサー描画関数
+    let currentLang = 'en';
+    let currentAttraction = null;
+
+    // Helper: update all UI text based on language
+    function updateUIText() {
+      const t = uiText[currentLang];
+      document.getElementById('partnerTitleMain').innerText = t.partnerTitle;
+      document.getElementById('partnerTitleDetail').innerText = t.partnerTitle;
+      document.getElementById('sponsorTitleMain').innerText = t.sponsorTitle;
+      document.getElementById('sponsorTitleDetail').innerText = t.sponsorTitle;
+      document.getElementById('pageTitleMain').innerText = t.pageTitle;
+      document.getElementById('metroMapTitle').innerText = t.metroMapTitle;
+      document.getElementById('officialMetroLink').innerText = t.officialMetroLink;
+      document.getElementById('centralStationTitle').innerText = t.centralStationTitle;
+      backButton.innerText = t.backButton;
+      document.getElementById('transportTitle').innerText = t.transportTitle;
+      document.getElementById('fromAirportLabel').innerText = t.fromAirportLabel;
+      document.getElementById('withinCityLabel').innerText = t.withinCityLabel;
+      const officialLinkSpan = document.getElementById('officialLink');
+      if (officialLinkSpan) officialLinkSpan.innerText = t.officialLinkText;
+      document.getElementById('contactLabel').innerText = t.contactLabel;
+      document.getElementById('copyright').innerText = t.copyright;
+    }
+
+    // Render partner and sponsor grids (same for both main and detail)
     function renderPartnerSponsor() {
       const grids = [
         { grid: document.getElementById('mainPartnerGrid'), data: partners, className: 'partner-btn' },
@@ -572,9 +633,6 @@
       });
     }
 
-    // 観光スポット一覧描画
-    let currentLang = 'en';
-    let currentAttraction = null;
     function renderAttractionsList() {
       attractionsList.innerHTML = '';
       attractionsData[currentLang].forEach(att => {
@@ -610,7 +668,8 @@
       document.getElementById('detailDescription').textContent = att.description;
       document.getElementById('airportTransport').textContent = att.airportTransport;
       document.getElementById('cityTransport').textContent = att.cityTransport;
-      document.getElementById('officialLink').href = att.officialLink;
+      const officialLinkEl = document.getElementById('officialLink');
+      officialLinkEl.href = att.officialLink;
       mainPage.style.display = 'none';
       detailPage.style.display = 'block';
       window.scrollTo(0,0);
@@ -626,10 +685,12 @@
     function toggleLang() {
       currentLang = currentLang === 'en' ? 'es' : 'en';
       langBtn.innerHTML = currentLang === 'en' ? '🌐 English' : '🌐 Español';
-      document.querySelector('.page-title').textContent = currentLang === 'en' ? "Barcelona's Top Attractions" : "Principales Atracciones de Barcelona";
-      backButton.innerHTML = currentLang === 'en' ? '← Back to List' : '← Volver a la lista';
-      if(currentAttraction) showAttractionDetail(currentAttraction.id);
-      else renderAttractionsList();
+      updateUIText();
+      if(currentAttraction) {
+        showAttractionDetail(currentAttraction.id);
+      } else {
+        renderAttractionsList();
+      }
     }
 
     function toggleTheme() {
@@ -641,13 +702,15 @@
     langBtn.addEventListener('click', toggleLang);
     themeBtn.addEventListener('click', toggleTheme);
 
+    // Initial render
     renderPartnerSponsor();
     renderAttractionsList();
+    updateUIText();
 
-    // Service Worker（オフライン対応）
+    // Service Worker (offline support)
     if('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => console.warn(err));
+        navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed', err));
       });
     }
   </script>
