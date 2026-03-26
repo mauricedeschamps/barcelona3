@@ -5,41 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Barcelona Travel Guide - 12 top attractions">
   <meta name="theme-color" content="#1a3a5f">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-512.png">
   <title>Barcelona Travel Guide PWA</title>
-  
-  <!-- 内蔵マニフェスト (外部ファイル不要) -->
-  <link rel="manifest" href="data:application/manifest+json,{
-    \"name\":\"Barcelona Travel Guide\",
-    \"short_name\":\"BCN Guide\",
-    \"description\":\"Discover Barcelona's top 12 attractions\",
-    \"start_url\"index.html",
-    \"display\":\"standalone\",
-    \"background_color\":\"#1a3a5f\",
-    \"theme_color\":\"#1a3a5f\",
-    \"icons\":[
-      {
-        \"src\":\"/icons/icon-192.png\",
-        \"sizes\":\"192x192\",
-        \"type\":\"image/png\",
-        \"purpose\":\"any maskable\"
-      },
-      {
-        \"src\":\"/icons/icon-512.png\",
-        \"sizes\":\"512x512\",
-        \"type\":\"image/png\",
-        \"purpose\":\"any maskable\"
-      },
-      {
-        \"src\":\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 100 120'%3E%3Cpath d='M50 10 L35 35 L50 60 L65 35 L50 10Z' fill='%23f8b400'/%3E%3Crect x='44' y='35' width='12' height='45' fill='%23e67e22'/%3E%3Cpath d='M30 70 L70 70 L65 85 L35 85 L30 70Z' fill='%23d35400'/%3E%3Ccircle cx='50' cy='90' r='6' fill='%23f1c40f'/%3E%3C/svg%3E\",
-        \"sizes\":\"192x192\",
-        \"type\":\"image/svg+xml\",
-        \"purpose\":\"any maskable\"
-      }
-    ]
-  }">
-  
   <style>
-    /* 全スタイルは前回と同一（省略せずに記載） */
+    /* 前回と同様のスタイル（省略せずに記載） */
     :root {
       --primary-color: #1a3a5f;
       --secondary-color: #f8b400;
@@ -67,7 +38,7 @@
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       --sponsor-bg: rgba(255, 193, 7, 0.15);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--background-color);
@@ -133,7 +104,7 @@
     .btn.install {
       background: var(--secondary-color);
       color: var(--primary-color);
-      display: none; /* 初期は非表示、インストール可能になったら表示 */
+      display: none;
     }
     main {
       max-width: 1280px;
@@ -423,7 +394,7 @@
   </footer>
 
   <script>
-    // ----- 言語テキスト (英/西) -----
+    // 言語テキスト
     const uiText = {
       en: {
         partnerTitle: "OFFICIAL PARTNERS",
@@ -457,7 +428,7 @@
       }
     };
 
-    // パートナー / スポンサーデータ
+    // パートナー・スポンサーデータ
     const partners = [
       { name: "Barcelona Turisme", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f8b400'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EBT%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.barcelonaturisme.com" },
       { name: "TMB (Public Transport)", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234e9f3d'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ETMB%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.tmb.cat" },
@@ -514,17 +485,24 @@
     let currentAttraction = null;
     let deferredPrompt = null;
 
-    // PWA install prompt handling
+    // PWA install prompt
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
       installBtn.style.display = 'inline-flex';
+      console.log('beforeinstallprompt fired');
     });
+
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') installBtn.style.display = 'none';
+      if (outcome === 'accepted') {
+        installBtn.style.display = 'none';
+        console.log('User accepted install');
+      } else {
+        console.log('User dismissed install');
+      }
       deferredPrompt = null;
     });
 
@@ -648,7 +626,9 @@
     // Service Worker registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed:', err));
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registered', reg))
+          .catch(err => console.error('Service Worker registration failed:', err));
       });
     }
   </script>
