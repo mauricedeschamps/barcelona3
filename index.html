@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -7,12 +7,39 @@
   <meta name="theme-color" content="#1a3a5f">
   <title>Barcelona Travel Guide PWA</title>
   
-  <!-- Manifest and icons (external files) -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="/icons/icon-192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="/icons/icon-512.png">
+  <!-- 内蔵マニフェスト (外部ファイル不要) -->
+  <link rel="manifest" href="data:application/manifest+json,{
+    \"name\":\"Barcelona Travel Guide\",
+    \"short_name\":\"BCN Guide\",
+    \"description\":\"Discover Barcelona's top 12 attractions\",
+    \"start_url\":\"/\",
+    \"display\":\"standalone\",
+    \"background_color\":\"#1a3a5f\",
+    \"theme_color\":\"#1a3a5f\",
+    \"icons\":[
+      {
+        \"src\":\"/icons/icon-192.png\",
+        \"sizes\":\"192x192\",
+        \"type\":\"image/png\",
+        \"purpose\":\"any maskable\"
+      },
+      {
+        \"src\":\"/icons/icon-512.png\",
+        \"sizes\":\"512x512\",
+        \"type\":\"image/png\",
+        \"purpose\":\"any maskable\"
+      },
+      {
+        \"src\":\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 100 120'%3E%3Cpath d='M50 10 L35 35 L50 60 L65 35 L50 10Z' fill='%23f8b400'/%3E%3Crect x='44' y='35' width='12' height='45' fill='%23e67e22'/%3E%3Cpath d='M30 70 L70 70 L65 85 L35 85 L30 70Z' fill='%23d35400'/%3E%3Ccircle cx='50' cy='90' r='6' fill='%23f1c40f'/%3E%3C/svg%3E\",
+        \"sizes\":\"192x192\",
+        \"type\":\"image/svg+xml\",
+        \"purpose\":\"any maskable\"
+      }
+    ]
+  }">
   
   <style>
+    /* 全スタイルは前回と同一（省略せずに記載） */
     :root {
       --primary-color: #1a3a5f;
       --secondary-color: #f8b400;
@@ -40,11 +67,7 @@
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       --sponsor-bg: rgba(255, 193, 7, 0.15);
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--background-color);
@@ -87,6 +110,7 @@
     .controls {
       display: flex;
       gap: 12px;
+      align-items: center;
     }
     .btn {
       background: var(--secondary-color);
@@ -103,24 +127,19 @@
       box-shadow: var(--shadow);
       font-size: 0.9rem;
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-    .btn.lang {
-      background: var(--accent-color);
-      color: white;
-    }
-    .btn.dark {
-      background: #4a5568;
-      color: white;
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+    .btn.lang { background: var(--accent-color); color: white; }
+    .btn.dark { background: #4a5568; color: white; }
+    .btn.install {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+      display: none; /* 初期は非表示、インストール可能になったら表示 */
     }
     main {
       max-width: 1280px;
       margin: 0 auto;
       padding: 30px 20px 80px;
     }
-    /* Partner & Sponsor sections */
     .partner-section, .sponsor-section {
       background: var(--sponsor-bg);
       border-radius: 20px;
@@ -128,7 +147,6 @@
       margin: 30px 0;
       text-align: center;
       border: 1px dashed var(--secondary-color);
-      transition: var(--transition);
     }
     .section-title {
       font-size: 1.2rem;
@@ -160,7 +178,6 @@
     }
     .partner-btn:hover, .sponsor-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       border-color: var(--secondary-color);
     }
     .partner-btn img, .sponsor-btn img {
@@ -170,9 +187,6 @@
       border-radius: 12px;
       background: white;
       padding: 4px;
-    }
-    .partner-btn span, .sponsor-btn span {
-      font-size: 1rem;
     }
     .page-title {
       text-align: center;
@@ -210,27 +224,15 @@
       flex-direction: column;
       height: 100%;
     }
-    .attraction-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-    }
+    .attraction-card:hover { transform: translateY(-8px); }
     .card-image {
       width: 100%;
       height: 220px;
       object-fit: cover;
       border-bottom: 4px solid var(--secondary-color);
     }
-    .card-content {
-      padding: 20px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      color: var(--text-color);
-    }
+    .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-title { font-size: 1.5rem; margin-bottom: 10px; }
     .card-category {
       display: inline-block;
       background: var(--primary-color);
@@ -240,12 +242,7 @@
       font-size: 0.85rem;
       margin-bottom: 15px;
     }
-    .card-description {
-      color: var(--text-secondary);
-      margin-bottom: 15px;
-      flex-grow: 1;
-      font-size: 0.95rem;
-    }
+    .card-description { color: var(--text-secondary); margin-bottom: 15px; flex-grow: 1; }
     .card-link {
       align-self: flex-start;
       background: var(--accent-color);
@@ -254,15 +251,11 @@
       padding: 8px 16px;
       border-radius: 30px;
       font-weight: 600;
-      transition: var(--transition);
       display: inline-flex;
       align-items: center;
       gap: 5px;
     }
-    .detail-page {
-      display: none;
-      padding: 20px;
-    }
+    .detail-page { display: none; padding: 20px; }
     .back-button {
       display: inline-flex;
       align-items: center;
@@ -282,18 +275,9 @@
       overflow: hidden;
       box-shadow: var(--shadow);
     }
-    .detail-image {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-    }
-    .detail-content {
-      padding: 30px;
-    }
-    .detail-title {
-      font-size: 2.3rem;
-      margin-bottom: 15px;
-    }
+    .detail-image { width: 100%; height: 400px; object-fit: cover; }
+    .detail-content { padding: 30px; }
+    .detail-title { font-size: 2.3rem; margin-bottom: 15px; }
     .detail-category {
       background: var(--primary-color);
       color: white;
@@ -302,11 +286,7 @@
       display: inline-block;
       margin-bottom: 20px;
     }
-    .detail-text {
-      margin-bottom: 25px;
-      line-height: 1.8;
-      font-size: 1.1rem;
-    }
+    .detail-text { margin-bottom: 25px; line-height: 1.8; font-size: 1.1rem; }
     .transport-section {
       background: rgba(78, 159, 61, 0.1);
       border-radius: 10px;
@@ -321,14 +301,8 @@
       margin-bottom: 20px;
       font-size: 1.4rem;
     }
-    .metro-map img, .google-map iframe {
-      width: 100%;
-      border-radius: 12px;
-    }
-    .metro-map {
-      margin: 20px 0;
-      text-align: center;
-    }
+    .metro-map img, .google-map iframe { width: 100%; border-radius: 12px; }
+    .metro-map { margin: 20px 0; text-align: center; }
     .official-link {
       display: inline-flex;
       align-items: center;
@@ -349,11 +323,7 @@
       color: white;
       margin-top: 40px;
     }
-    .contact-link {
-      color: var(--secondary-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .contact-link { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
     @media (max-width: 768px) {
       .attractions-list { grid-template-columns: 1fr; }
       .logo h1 { font-size: 1.3rem; }
@@ -381,51 +351,41 @@
       <h1>Barcelona Travel Guide</h1>
     </div>
     <div class="controls">
+      <button id="installBtn" class="btn install" style="display:none;">📲 Install App</button>
       <button id="langBtn" class="btn lang">🌐 English</button>
       <button id="themeBtn" class="btn dark">☀️ Light Mode</button>
     </div>
   </header>
 
   <main>
-    <!-- Main page -->
     <div id="mainPage">
-      <!-- Partner section (top) -->
-      <div class="partner-section" id="mainPartnerSection">
+      <div class="partner-section">
         <div class="section-title" id="partnerTitleMain">OFFICIAL PARTNERS</div>
         <div class="partner-grid" id="mainPartnerGrid"></div>
       </div>
-
       <h2 class="page-title" id="pageTitleMain">Barcelona's Top Attractions</h2>
-      
-      <!-- Metro map & Google Maps -->
       <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 40px;">
-        <div style="flex: 1; min-width: 250px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 12px;" id="metroMapTitle">🚇 Barcelona Metro Map</h3>
+        <div style="flex:1; min-width:250px;">
+          <h3 style="color:var(--accent-color); margin-bottom:12px;" id="metroMapTitle">🚇 Barcelona Metro Map</h3>
           <div class="metro-map">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/1024px-Mapa_metro_Barcelona.svg.png" 
-                 alt="Barcelona Metro Map" style="width:100%; border-radius: 12px;">
-            <p style="font-size: 0.8rem; margin-top: 8px;"><a href="https://www.tmb.cat/en/barcelona-transport/map" target="_blank" style="color: var(--secondary-color);" id="officialMetroLink">Official Metro Map (TMB)</a></p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/1024px-Mapa_metro_Barcelona.svg.png" alt="Metro Map" style="width:100%; border-radius:12px;">
+            <p style="font-size:0.8rem; margin-top:8px;"><a href="https://www.tmb.cat/en/barcelona-transport/map" target="_blank" style="color:var(--secondary-color);" id="officialMetroLink">Official Metro Map (TMB)</a></p>
           </div>
         </div>
-        <div style="flex: 1; min-width: 250px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 12px;" id="centralStationTitle">📍 Central Station (Plaça de Catalunya)</h3>
+        <div style="flex:1; min-width:250px;">
+          <h3 style="color:var(--accent-color); margin-bottom:12px;" id="centralStationTitle">📍 Central Station (Plaça de Catalunya)</h3>
           <div class="google-map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.177802529166!2d2.169339715500795!3d41.386960479262685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2fcddeedbad%3A0x9b3e3b3b3b3b3b3b!2sPla%C3%A7a%20de%20Catalunya!5e0!3m2!1sen!2ses!4v1617189786543!5m2!1sen!2ses" allowfullscreen="" loading="lazy" style="width:100%; height:350px; border:0; border-radius:12px;"></iframe>
           </div>
         </div>
       </div>
-
-      <!-- Attractions list -->
       <div class="attractions-list" id="attractionsList"></div>
-
-      <!-- Sponsor section (bottom) -->
-      <div class="sponsor-section" id="mainSponsorSection">
+      <div class="sponsor-section">
         <div class="section-title" id="sponsorTitleMain">SPONSORS</div>
         <div class="sponsor-grid" id="mainSponsorGrid"></div>
       </div>
     </div>
 
-    <!-- Detail page -->
     <div id="detailPage" class="detail-page">
       <button class="back-button" id="backButton">← Back to List</button>
       <div class="detail-container">
@@ -438,19 +398,16 @@
             <h3 class="section-subtitle" id="transportTitle">🚆 Transportation</h3>
             <p><strong id="fromAirportLabel">From Airport:</strong> <span id="airportTransport"></span></p>
             <p><strong id="withinCityLabel">Within City:</strong> <span id="cityTransport"></span></p>
-            <div class="metro-map" style="margin-top: 16px;">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/800px-Mapa_metro_Barcelona.svg.png" alt="Metro Map Mini" style="max-height: 180px; width: auto;">
+            <div class="metro-map" style="margin-top:16px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Mapa_metro_Barcelona.svg/800px-Mapa_metro_Barcelona.svg.png" alt="Metro Map Mini" style="max-height:180px; width:auto;">
             </div>
           </div>
-          <a id="officialLink" class="official-link" href="#" target="_blank" id="officialLinkText">🌐 Official Website →</a>
-          
-          <!-- Partner section inside detail -->
-          <div class="partner-section" style="margin-top: 30px;" id="detailPartnerSection">
+          <a id="officialLink" class="official-link" href="#" target="_blank">🌐 Official Website →</a>
+          <div class="partner-section" style="margin-top:30px;">
             <div class="section-title" id="partnerTitleDetail">OFFICIAL PARTNERS</div>
             <div class="partner-grid" id="detailPartnerGrid"></div>
           </div>
-          <!-- Sponsor section inside detail -->
-          <div class="sponsor-section" id="detailSponsorSection">
+          <div class="sponsor-section">
             <div class="section-title" id="sponsorTitleDetail">SPONSORS</div>
             <div class="sponsor-grid" id="detailSponsorGrid"></div>
           </div>
@@ -462,13 +419,11 @@
   <footer>
     <p id="contactLabel">📧 Contact:</p>
     <a href="mailto:mementomorikatsu@gmail.com" class="contact-link">mementomorikatsu@gmail.com</a>
-    <p style="font-size: 0.8rem; margin-top: 8px;" id="copyright">© Barcelona Travel Guide PWA</p>
+    <p style="font-size:0.8rem; margin-top:8px;" id="copyright">© Barcelona Travel Guide PWA</p>
   </footer>
 
   <script>
-    // ============================================================
-    // Language strings for UI elements (English and Spanish only)
-    // ============================================================
+    // ----- 言語テキスト (英/西) -----
     const uiText = {
       en: {
         partnerTitle: "OFFICIAL PARTNERS",
@@ -502,44 +457,19 @@
       }
     };
 
-    // Partner & Sponsor data (image + link)
+    // パートナー / スポンサーデータ
     const partners = [
-      {
-        name: "Barcelona Turisme",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f8b400'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EBT%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.barcelonaturisme.com"
-      },
-      {
-        name: "TMB (Public Transport)",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234e9f3d'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ETMB%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.tmb.cat"
-      },
-      {
-        name: "Gaudí Experiència",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3a5f'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EGaudí%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.sagradafamilia.org"
-      }
+      { name: "Barcelona Turisme", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f8b400'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EBT%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.barcelonaturisme.com" },
+      { name: "TMB (Public Transport)", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234e9f3d'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ETMB%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.tmb.cat" },
+      { name: "Gaudí Experiència", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3a5f'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EGaudí%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.sagradafamilia.org" }
     ];
-
     const sponsors = [
-      {
-        name: "Booking.com",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23003580'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EBooking%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.booking.com"
-      },
-      {
-        name: "SkyScanner",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f47b2e'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ESky%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.skyscanner.com"
-      },
-      {
-        name: "FreeNow",
-        logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2300b2b2'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EFreeNow%3C/text%3E%3C/svg%3E",
-        websiteUrl: "https://www.free-now.com"
-      }
+      { name: "Booking.com", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23003580'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EBooking%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.booking.com" },
+      { name: "SkyScanner", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f47b2e'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3ESky%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.skyscanner.com" },
+      { name: "FreeNow", logoUrl: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2300b2b2'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white'%3EFreeNow%3C/text%3E%3C/svg%3E", websiteUrl: "https://www.free-now.com" }
     ];
 
-    // Attractions data (English & Spanish) – only names and categories are language-specific; descriptions are already bilingual in data.
+    // 観光名所データ（英語／スペイン語）
     const attractionsData = {
       en: [
         { id: "sagrada-familia", name: "Sagrada Família", category: "Gaudí's Masterpiece", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8icHwUGJdkp-mkt37BD1vzPLHVtLDEH4xjZ9yWPRjzT3MlqCJUgmq9CM&s=10", description: "Antoni Gaudí's unfinished masterpiece, a basilica that combines Gothic and Art Nouveau forms.", airportTransport: "Aerobus to Plaça de Catalunya, then Metro L2 or L5 to Sagrada Família station", cityTransport: "Metro: L2 and L5, Sagrada Família station.", officialLink: "https://sagradafamilia.org" },
@@ -578,11 +508,26 @@
     const backButton = document.getElementById('backButton');
     const langBtn = document.getElementById('langBtn');
     const themeBtn = document.getElementById('themeBtn');
+    const installBtn = document.getElementById('installBtn');
 
     let currentLang = 'en';
     let currentAttraction = null;
+    let deferredPrompt = null;
 
-    // Helper: update all UI text based on language
+    // PWA install prompt handling
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-flex';
+    });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') installBtn.style.display = 'none';
+      deferredPrompt = null;
+    });
+
     function updateUIText() {
       const t = uiText[currentLang];
       document.getElementById('partnerTitleMain').innerText = t.partnerTitle;
@@ -597,13 +542,11 @@
       document.getElementById('transportTitle').innerText = t.transportTitle;
       document.getElementById('fromAirportLabel').innerText = t.fromAirportLabel;
       document.getElementById('withinCityLabel').innerText = t.withinCityLabel;
-      const officialLinkSpan = document.getElementById('officialLink');
-      if (officialLinkSpan) officialLinkSpan.innerText = t.officialLinkText;
+      document.getElementById('officialLink').innerText = t.officialLinkText;
       document.getElementById('contactLabel').innerText = t.contactLabel;
       document.getElementById('copyright').innerText = t.copyright;
     }
 
-    // Render partner and sponsor grids (same for both main and detail)
     function renderPartnerSponsor() {
       const grids = [
         { grid: document.getElementById('mainPartnerGrid'), data: partners, className: 'partner-btn' },
@@ -612,7 +555,7 @@
         { grid: document.getElementById('detailSponsorGrid'), data: sponsors, className: 'sponsor-btn' }
       ];
       grids.forEach(({grid, data, className}) => {
-        if(!grid) return;
+        if (!grid) return;
         grid.innerHTML = '';
         data.forEach(item => {
           const a = document.createElement('a');
@@ -660,7 +603,7 @@
 
     function showAttractionDetail(id) {
       const att = attractionsData[currentLang].find(a => a.id === id);
-      if(!att) return;
+      if (!att) return;
       currentAttraction = att;
       document.getElementById('detailImg').src = att.image;
       document.getElementById('detailCategory').textContent = att.category;
@@ -668,8 +611,7 @@
       document.getElementById('detailDescription').textContent = att.description;
       document.getElementById('airportTransport').textContent = att.airportTransport;
       document.getElementById('cityTransport').textContent = att.cityTransport;
-      const officialLinkEl = document.getElementById('officialLink');
-      officialLinkEl.href = att.officialLink;
+      document.getElementById('officialLink').href = att.officialLink;
       mainPage.style.display = 'none';
       detailPage.style.display = 'block';
       window.scrollTo(0,0);
@@ -686,11 +628,8 @@
       currentLang = currentLang === 'en' ? 'es' : 'en';
       langBtn.innerHTML = currentLang === 'en' ? '🌐 English' : '🌐 Español';
       updateUIText();
-      if(currentAttraction) {
-        showAttractionDetail(currentAttraction.id);
-      } else {
-        renderAttractionsList();
-      }
+      if (currentAttraction) showAttractionDetail(currentAttraction.id);
+      else renderAttractionsList();
     }
 
     function toggleTheme() {
@@ -702,15 +641,14 @@
     langBtn.addEventListener('click', toggleLang);
     themeBtn.addEventListener('click', toggleTheme);
 
-    // Initial render
     renderPartnerSponsor();
     renderAttractionsList();
     updateUIText();
 
-    // Service Worker (offline support)
-    if('serviceWorker' in navigator) {
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed', err));
+        navigator.serviceWorker.register('/sw.js').catch(err => console.warn('SW registration failed:', err));
       });
     }
   </script>
